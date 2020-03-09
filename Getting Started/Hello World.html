@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:widget="http://www.netvibes.com/ns/">
+    <head>
+
+        <!-- Application Metas -->
+        <title>Title of the App</title>
+        <meta name="author" content="John Doe" />
+        <meta name="description" content="A descriptive description" />
+
+        <!-- Application Standalone emulation files -->
+        <link rel="stylesheet" type="text/css"
+            href="../styles/standalone.css" />
+        <script type="text/javascript"
+            src="../scripts/UWA_Standalone_Alone.js"></script>
+
+        <!-- Application Preferences -->
+        <widget:preferences>
+            <widget:preference name="hellowho" type="text" label="Hello who ?" defaultValue="World"></widget:preference>
+        </widget:preferences>
+
+        <!-- Application JavaScript Source -->
+        <script type="text/javascript">
+        //<![CDATA[
+
+            /*
+                We create the global MyWidget object (it could be any other name).
+                This object will be used to store variables and functions.
+            */
+            var MyWidget = {
+
+                toWhom = "no one",
+                /*
+                    The onLoad() function is the first one,
+                    it will be triggered by widget "onLoad" event.
+                */
+                onLoad: function() {
+
+                    // Here we update the content of the widget body.
+                    // widget.setBody({
+                    //    tag: "h1",
+                    //    text: "My App Title" 
+                    // });
+
+                    // MyWidget.whoElement = widget.createElement("p").inject(widget.body);
+
+                    UWA.Data.getText("http://api.example.org/request", MyWidget.onComplete);
+
+                    MyWidget.updateWho();
+                },
+                onComplete: function(who) {
+                    if (who) {
+                        MyWidget.toWhom = who;
+                    }
+
+                    widget.setBody({
+                        tag: 'p',
+                        text: 'Hello ' + MyWidget.toWhom + '!'
+                    });
+                },
+                onRefresh: function() {
+                    MyWidget.updateWho();
+                },
+                updateWho: function() {
+                    var who = widget.getValue("hellowho");
+
+                    MyWidget.whoElement.setText("Hello " + who + "!");
+                }
+            };
+
+            /*
+                The "onLoad" event is the very first event triggered when
+                the widget is fully loaded or when the preferences are validated.
+
+                Here, we add MyWidget.onLoad() function as "onLoad" event
+                listener on the widget.
+            */
+            widget.addEvent('onLoad', MyWidget.onLoad);
+            widget.addEvent('onRefresh', MyWidget.onRefresh);
+
+        //]]>
+        </script>
+      </head>
+      <body>
+            <p>Loading...</p>
+      </body>
+</html>
