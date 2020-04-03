@@ -1,0 +1,35 @@
+<input type="text" id="field" onChange="fnChange()" />
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script>
+function fnChange() {
+	var outerWidth = $("#p").outerWidth();
+	//alert(outerWidth);
+	var textLength = $("#field").val().length;
+	//alert(textLength);
+	var textSize = outerWidth / textLength;
+	var maxSize = 30;
+	var minSize = 10;
+	textSize = textSize > maxSize ? maxSize : textSize;
+	textSize = textSize < minSize ? minSize : textSize;
+	//alert(textSize);
+	$("#p").css("font-size", Math.ceil(textSize) + "px");
+	$("#p").html($("#field").val());
+}
+function fnCalc () {
+	alert($("#p").width());
+	alert($("#p").outerWidth());
+}
+</script>
+<style type="text/css">
+div {
+	background-color: yellow;
+	width: 500px;
+	cellpadding: 20;
+	text-align: center;
+}
+
+</style>
+<input type="button" value="calc" onclick="fnCalc()" />
+<div id="p">
+&nbsp;
+</div>

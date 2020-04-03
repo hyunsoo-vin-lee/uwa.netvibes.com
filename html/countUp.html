@@ -1,0 +1,10 @@
+<script src="../scripts/CountUp.js"/>
+<script>
+const countUp = new CountUp('targetId', 5234);
+if (!countUp.error) {
+  countUp.start();
+} else {
+  console.error(countUp.error);
+}
+</script>
+<h1 id="targetId"></h1>
